@@ -54,7 +54,7 @@ module Json
         only_file_name = File.basename(@file_path, ".json")
         p "only_file_name = #{only_file_name}" # debug
         p "@initial_data[\"file_name\"] = #{@initial_data["file_name"]}" # debug
-        @initial_data[":file_name"] = only_file_name
+        @initial_data["file_name"] = only_file_name
       end
 
       def save
@@ -62,8 +62,8 @@ module Json
 
         if @data != {}
           p "delete before @data = #{@data}"
-          p "@data.delete(\":file_name\") = #{@data.delete(":file_name")}"
-          @data.delete(:file_name) # ファイル名だけ消す
+          p "@data.delete(\"file_name\") = #{@data.delete(":file_name")}"
+          @data.delete("file_name") # ファイル名だけ消す
           p "delete after @data = #{@data}"
 
           open(@file_path, "w") do |io|
