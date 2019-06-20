@@ -2,7 +2,11 @@
     <%# <li>aaa</li>
     <li>iii</li>
     <li>uuu</li> %>
-    <% @data.each do |v| %>
-    <%=  "<li>#{v}</li>"%>
-    <% end %>
+    <% @titles.each do |v|
+        p "v = #{v}"
+    %><%=
+        "<li><a href=\"/show/#{v[:file_name]}\">#{v[:title]}</a></li>"
+    %><%
+        end
+    %>
 </ul>
