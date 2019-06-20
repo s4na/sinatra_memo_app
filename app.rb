@@ -56,17 +56,13 @@ end
 
 get "/create" do
   filenames = set_only_file_names
-  # p filenames # debug
   new_file_name = filenames.map(&:to_i).max + 1
   @id = new_file_name
   erb :create
 end
 
 get "/:id" do
-  # post`/` createに変えたい
-
   @id = params[:id]
-
   set_one_memo("./data/#{params[:id]}.json")
   @title = @one_memo["title"]
   @contents = @one_memo["contents"]
@@ -74,37 +70,23 @@ get "/:id" do
 end
 
 get "/:id/edit" do |id|
-  # 課題：一部データしかなくても反映されるようにする
   @id = params[:id]
-
   set_one_memo("./data/#{params[:id]}.json")
   @title = @one_memo["title"]
   @contents = @one_memo["contents"]
-
   erb :edit
 end
 
 patch "/:id" do |id|
   @id = params[:id]
-
   @title = params["title"]
   @contents = params["contents"]
-
   update_data("./data/#{@id}.json", title: params["title"], contents: params["contents"])
-  # erb :update
-
   show
 end
-
-# get "/read_delete/:id" do |id|
-#   @id = params[:id]
-#   erb :read_delete
-# end
 
 delete "/:id" do |id|
   @id = params[:id]
   File.delete("./data/#{@id}.json")
-  # erb :delete
-
   show
 end
