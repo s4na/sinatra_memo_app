@@ -10,35 +10,31 @@ use Rack::MethodOverride
 def set_files
   fl = FileList.new
   fl.make("./data")
-  # @titles = ["aaa", "bbb"]
-  # p fl.list
   fl.list
+end
+
+def set_only_file_names
+  fl = FileList.new
+  fl.make("./data")
+  check_blank(fl.only_file_names)
+end
+
+def check_blank(input)
+  input == [] ? ["0"] : input
 end
 
 def set_titles(files)
   @titles = []
   files.each do |f|
-    # p "f = #{f}" # debug
     fi = Json::Io.new(f)
-    # p "read" # debug
     fi.read
-    # p fi.data # debug
-    # p "add #{fi.data["title"]}" # debug
-
-    # 問題：この書き方がよくない
-    @titles.push(file_name: fi.data["file_name"], title: fi.data["title"])
+    @titles.push(fi.data)
   end
 end
 
-def set_data(file_path)
-  # p "f = #{f}" # debug
+def set_one_memo(file_path)
   fi = Json::Io.new(file_path)
-  # p "read" # debug
   fi.read
-  p fi.data # debug
-  # p "add #{fi.data["title"]}" # debug
-
-  # 問題：この書き方がよくない
   @one_memo = fi.data
 end
 
@@ -48,67 +44,67 @@ def update_data(file_path, in_data)
   fi.update(in_data)
 end
 
-get "/" do
-  # "top page"
+def show
   files = set_files
-  p "files = #{files}" # debug
   set_titles(files)
-  p @titles
   erb :top
 end
 
-get "/show/:id" do
-  # 問題：この書き方はよくないので、後で修正する
-  # 課題：@title必要？
-
-  p "./data/#{params[:id]}.json" # debug
-  set_data("./data/#{params[:id]}.json")
-  p @one_memo # debug
-  @title = @one_memo["title"]
-  @contents = @one_memo["contents"]
-  erb :show
+get "/" do
+  show
 end
 
-get "/edit/:id" do |id|
-  # 作業：editボタンが効いてない
-  # 作業：PATCH化する
-  # 作業：一部データしかなくても反映されるようにする
+get "/create" do
+  filenames = set_only_file_names
+  # p filenames # debug
+  new_file_name = filenames.map(&:to_i).max + 1
+  @id = new_file_name
+  erb :create
+end
 
-  # --- 検討：1つのデータ持ってくる定型文にするかも・
-  set_data("./data/#{params[:id]}.json")
-  p @one_memo # debug
-  @title = @one_memo["title"]
-  @contents = @one_memo["contents"]
-  # ---
+get "/:id" do
+  # post`/` createに変えたい
 
   @id = params[:id]
+
+  set_one_memo("./data/#{params[:id]}.json")
+  @title = @one_memo["title"]
+  @contents = @one_memo["contents"]
+  erb :read
+end
+
+get "/:id/edit" do |id|
+  # 課題：一部データしかなくても反映されるようにする
+  @id = params[:id]
+
+  set_one_memo("./data/#{params[:id]}.json")
+  @title = @one_memo["title"]
+  @contents = @one_memo["contents"]
+
   erb :edit
 end
 
-patch "/update/:id" do |id|
-  pp params # debug
+patch "/:id" do |id|
   @id = params[:id]
-  p "in = ./data/#{@id}.json" # debug
 
   @title = params["title"]
   @contents = params["contents"]
-  p @title # debug
-  p @contents # debug
+
   update_data("./data/#{@id}.json", title: params["title"], contents: params["contents"])
-  erb :update
+  # erb :update
+
+  show
 end
 
-get "/show_delete/:id" do |id|
-  @id = params[:id]
-  erb :show_delete
-end
+# get "/read_delete/:id" do |id|
+#   @id = params[:id]
+#   erb :read_delete
+# end
 
-delete "/delete/:id" do |id|
-  # 検討：button formにする？（しないとajax必要だっけ？
-  # 課題 @id から @idに変更したい
-  # 作業：DELETEメソッドにする
+delete "/:id" do |id|
   @id = params[:id]
-  p "@id = ./data/#{@id}.json"
   File.delete("./data/#{@id}.json")
-  erb :delete
+  # erb :delete
+
+  show
 end

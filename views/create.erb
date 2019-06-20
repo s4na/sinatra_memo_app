@@ -1,8 +1,8 @@
 <form action="/<%= @id %>" method="POST">
-    <dir><input type="text" name="title" value="<%= @title %>"></dir>
-    <dir><textarea name="contents"><%= @contents %></textarea></dir>
+    <dir><input type="text" name="title"></dir>
+    <dir><textarea name="contents"></textarea></dir>
     <dir><input type="hidden" name="_method" value="PATCH"></dir>
-    <dir><input type="submit" value="変更"></dir>
+    <dir><input type="submit" value="追加"></dir>
 </form>
 
 <form action="/" method="GET">

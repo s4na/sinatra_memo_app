@@ -1,12 +1,20 @@
+<form action="/create" method="GET">
+    <dir><input type="submit" value="追加"></dir>
+</form>
+
 <ul>
     <%# <li>aaa</li>
     <li>iii</li>
     <li>uuu</li> %>
-    <% @titles.each do |v|
-        p "v = #{v}"
+    <%
+        p "top.erb"
+        p @titles # debug
+        @titles.each do |v|
+        p "v = #{v}" # debug
     %><%=
-        "<li><a href=\"/show/#{v[:file_name]}\">#{v[:title]}</a></li>"
+        "<li><a href=\"/#{v["file_name"]}\"><label>#{v["title"]}</label></a></li>"
     %><%
         end
     %>
+
 </ul>

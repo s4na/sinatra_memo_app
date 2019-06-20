@@ -1,0 +1,27 @@
+<div><%= @title %></div>
+<div><%= @contents %></div>
+
+<%
+    # debug
+    p "show.erb"
+    p "@id = #{@id}"
+%>
+
+<div>
+    <form action="/<%= @id %>/edit" method="GET">
+        <div>
+            <input type="submit" value="変更">
+        </dib>
+    </form>
+
+    <form action="/<%= @id %>" method="POST">
+        <div>
+            <input type="submit" value="削除">
+        </div>
+        <input type="hidden" name="_method" value="DELETE">
+    </form>
+</div>
+
+<form action="/" method="GET">
+    <dir><input type="submit" value="TOPに戻る"></dir>
+</form>
