@@ -20,7 +20,7 @@ class MemoApp < Sinatra::Base
   end
 
   get "/create" do
-    erb :create
+    erb :create, layout: :layout_edit
   end
 
   get "/:id" do |id|
@@ -32,7 +32,7 @@ class MemoApp < Sinatra::Base
     set_one_memo("./data/#{id}.json")
     @title = h(@one_memo["title"])
     @contents = h(@one_memo["contents"])
-    erb :edit
+    erb :edit, layout: :layout_edit
   end
 
   post "/" do
