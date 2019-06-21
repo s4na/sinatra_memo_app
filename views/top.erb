@@ -7,12 +7,12 @@
     <li>iii</li>
     <li>uuu</li> %>
     <%
-        p "top.erb"
-        p @titles # debug
+        # p "top.erb"
+        # p @titles # debug
         @titles.each do |v|
-        p "v = #{v}" # debug
+        # p "v = #{v}" # debug
     %><%=
-        "<li><a href=\"/#{v["file_name"]}\"><label>#{v["title"]}</label></a></li>"
+        "<li><a href=\"/#{v["file_name"]}\"><label>#{h(v["title"])}</label></a></li>"
     %><%
         end
     %>

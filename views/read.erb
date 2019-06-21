@@ -1,6 +1,5 @@
 <div><%= @title %></div>
 <div><%= @contents %></div>
-
 <%
     # debug
     p "show.erb"
@@ -11,7 +10,7 @@
     <form action="/<%= @id %>/edit" method="GET">
         <div>
             <input type="submit" value="変更">
-        </dib>
+        </div>
     </form>
 
     <form action="/<%= @id %>" method="POST">
