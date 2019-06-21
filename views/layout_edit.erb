@@ -12,16 +12,18 @@
     <link rel="stylesheet" href="/css/style.css">
     <title>メモアプリ</title>
 </head>
-<body>
-    <div class="fdb-block fp-active" data-block-type="features" data-id="2" draggable="true">
-        <header class="row text-center justify-content-center">
-            <div class="col-12 col-md-8 dol-lg-7">
-                <h1>メモアプリ</h1>
-            </div>
-        </header>
-        <article>
-            <%= yield %>
-        </article>
+<body class="form-background">
+    <div class="container">
+        <div class="fdb-block fp-active" data-block-type="features" data-id="2" draggable="true">
+            <header class="row text-center justify-content-center">
+                <div class="col-12 col-md-8 dol-lg-7">
+                    <h1>メモアプリ</h1>
+                </div>
+            </header>
+            <article>
+                <%= yield %>
+            </article>
+        </div>
     </div>
 </body>
 </html>

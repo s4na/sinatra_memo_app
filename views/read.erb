@@ -1,26 +1,37 @@
-<div><%= @title %></div>
-<div><%= @contents %></div>
-<%
-    # debug
-    p "show.erb"
-    p "@id = #{@id}"
-%>
-
-<div>
-    <form action="/<%= @id %>/edit" method="GET">
-        <div>
-            <input type="submit" value="変更">
+<section>
+    <div class="row text-center justify-content-center">
+        <div class="fdb-box fdb-touch">
+            <div class="row mt-4">
+                <dir class="col-12 col-md">
+                    <h2><%= @title %></h2>
+                </dir>
+            </div>
+            <div class="row mt-4"></div>
+            <dir class="col-12 col-md mt-4 mt-md-0">
+                <p><%= @contents %></p>
+            </dir>
+            <div class="row text-center justify-content-center mt-4">
+                <form action="/<%= @id %>/edit" method="GET">
+                    <div>
+                        <dir class="col-12 col-md mt-4 mt-md-0">
+                            <input type="submit" value="変更" class="btn btn-dark">
+                        </dir>
+                    </div>
+                </form>
+                <form action="/<%= @id %>" method="POST">
+                    <div>
+                        <dir class="col-12 col-md mt-4 mt-md-0">
+                            <input type="submit" value="削除" class="btn btn-danger">
+                        </dir>
+                        <input type="hidden" name="_method" value="DELETE">
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
+    <form action="/" method="GET">
+        <dir class="col text-center">
+            <input type="submit" value="TOPに戻る" class="btn btn-dark">
+        </dir>
     </form>
-
-    <form action="/<%= @id %>" method="POST">
-        <div>
-            <input type="submit" value="削除">
-        </div>
-        <input type="hidden" name="_method" value="DELETE">
-    </form>
-</div>
-
-<form action="/" method="GET">
-    <dir><input type="submit" value="TOPに戻る"></dir>
-</form>
+</section>
