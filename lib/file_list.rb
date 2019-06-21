@@ -9,25 +9,14 @@ class FileList
   end
 
   def make(path)
-    # p "Dir.pwd = #{Dir.pwd}" # debug
-    # 作成：pathの`/*`消す処理
-    # 課題：絶対パスにする必要あるかも？？
     @list = Dir.glob("#{path}/*")
     @list.sort! { |a,b|
       File.basename(a, ".json").to_i <=> File.basename(b, ".json").to_i
     }
-    p "list = "
-    p @list # debug
-
 
     @list.each do |file_path|
       @only_file_names.push(File.basename(file_path, ".json"))
     end
-
-    # p "@only_file_names = #{@only_file_names}" # debug
     @list
   end
 end
-
-# fl = FileList.new
-# fl.make("../data")

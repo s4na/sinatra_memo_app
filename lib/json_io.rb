@@ -10,10 +10,6 @@ module Json
       @file_path = filename
     end
 
-    # def data
-    #   @data
-    # end
-
     def read
       if ::File.exist?(@file_path)
         @initial_data = open(@file_path, "r") do |io|
@@ -31,11 +27,6 @@ module Json
     end
 
     def update(input)
-      # 課題：input nil考慮
-      # if @data.nil?
-      #   @data = {}
-      # end
-
       input.each do |key, value|
         @data["#{key}"] = value
       end
@@ -58,8 +49,6 @@ module Json
       end
 
       def save
-        # 問題点: 修正中に他のトランザクションで修正が行われたらデータが保護されない。上書きされる。
-
         if @data != {}
           p "delete before @data = #{@data}"
           p "@data.delete(\"file_name\") = #{@data.delete(":file_name")}"
@@ -74,22 +63,3 @@ module Json
       end
   end
 end
-
-# fi = Json::Io.new("../data/4.json")
-# p "read"
-# fi.read
-
-# p "show"
-# p fi.data
-
-# p "update"
-# fi.update(title: "aaa", contents: "iii")
-
-# p "show"
-# p fi.data
-
-# p "delete"
-# fi.delete
-
-# p "show"
-# p fi.data
