@@ -9,14 +9,23 @@ class FileList
   end
 
   def make(path)
-    @list = Dir.glob("#{path}/*")
-    @list.sort! { |a,b|
-      File.basename(a, ".json").to_i <=> File.basename(b, ".json").to_i
-    }
+    set_list(path)
 
-    @list.each do |file_path|
-      @only_file_names.push(File.basename(file_path, ".json"))
-    end
+    set_only_file_names
     @list
   end
+
+  private
+    def set_list(path)
+      @list = Dir.glob("#{path}/*")
+      @list.sort! { |a, b|
+        File.basename(a, ".json").to_i <=> File.basename(b, ".json").to_i
+      }
+    end
+
+    def set_only_file_names
+      @list.each do |file_path|
+        @only_file_names.push(File.basename(file_path, ".json"))
+      end
+    end
 end

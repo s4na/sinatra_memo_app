@@ -11,25 +11,13 @@ module Json
     end
 
     def read
-      if ::File.exist?(@file_path)
-        @initial_data = open(@file_path, "r") do |io|
-          ::JSON.load(io)
-        end
-      end
-      p "nilchech: @initial_data = #{@initial_data}" # debug
-      if @initial_data.nil?
-        p "no file to make @initial_data = {}" # debug
-        @initial_data = {}
-      end
+      set_initiali_data
       set_only_filename
-      p "@initial_data = #{@initial_data}" # debug
       @data = @initial_data
     end
 
     def update(input)
-      input.each do |key, value|
-        @data["#{key}"] = value
-      end
+      input.each { |key, value| @data["#{key}"] = value }
       save
     end
 
@@ -39,25 +27,23 @@ module Json
     end
 
     private
+      def set_initiali_data
+        if ::File.exist?(@file_path)
+          @initial_data = open(@file_path, "r") { |io| ::JSON.load(io) }
+        end
+
+        @initial_data = {} if @initial_data.nil?
+      end
+
       def set_only_filename
-        # 問題：既に存在する場合どうなる？
-        # 対策：saveにreject噛ませた
         only_file_name = File.basename(@file_path, ".json")
-        p "only_file_name = #{only_file_name}" # debug
-        p "@initial_data[\"file_name\"] = #{@initial_data["file_name"]}" # debug
         @initial_data["file_name"] = only_file_name
       end
 
       def save
         if @data != {}
-          p "delete before @data = #{@data}"
-          p "@data.delete(\"file_name\") = #{@data.delete(":file_name")}"
-          @data.delete("file_name") # ファイル名だけ消す
-          p "delete after @data = #{@data}"
-
-          open(@file_path, "w") do |io|
-            ::JSON.dump(@data, io)
-          end
+          @data.delete("file_name")
+          open(@file_path, "w") { |io| ::JSON.dump(@data, io) }
         end
         read
       end
