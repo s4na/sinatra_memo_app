@@ -42,7 +42,7 @@ class MemoApp < Sinatra::Base
     @title = "新しいメモ" if @title == ""
 
     @contents = params["contents"]
-    update_data("./data/#{@id}.json", title: @title, contents: @contents)
+    update_data("./data/#{@id}.json")
 
     show_read(@id)
   end
@@ -52,7 +52,7 @@ class MemoApp < Sinatra::Base
     @title = "新しいメモ" if @title == ""
 
     @contents = params["contents"]
-    update_data("./data/#{id}.json", title: @title, contents: @contents)
+    update_data("./data/#{id}.json")
 
     show_read(id)
   end
@@ -108,7 +108,8 @@ class MemoApp < Sinatra::Base
       end
     end
 
-    def update_data(file_path, in_data)
+    def update_data(file_path)
+      in_data = { title: @title, contents: @contents }
       fi = Json::Io.new(file_path)
       fi.read
       fi.update(in_data)
