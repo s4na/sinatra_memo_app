@@ -30,7 +30,7 @@ class MemoApp < Sinatra::Base
   get "/:id/edit" do |id|
     @id = id
     set_one_memo("./data/#{id}.json")
-    @title = h(@one_memo["title"])
+    set_title(h(@one_memo["title"]))
     @contents = h(@one_memo["contents"])
     erb :edit, layout: :layout_edit
   end
@@ -38,21 +38,19 @@ class MemoApp < Sinatra::Base
   post "/" do
     @id = new_id
 
-    @title = params["title"]
-    @title = "新しいメモ" if @title == ""
+    set_title(params["title"])
 
     @contents = params["contents"]
-    update_data("./data/#{@id}.json", title: @title, contents: @contents)
+    update_data("./data/#{@id}.json")
 
     show_read(@id)
   end
 
   patch "/:id" do |id|
-    @title = params["title"]
-    @title = "新しいメモ" if @title == ""
+    set_title(params["title"])
 
     @contents = params["contents"]
-    update_data("./data/#{id}.json", title: @title, contents: @contents)
+    update_data("./data/#{id}.json")
 
     show_read(id)
   end
@@ -63,6 +61,11 @@ class MemoApp < Sinatra::Base
   end
 
   private
+    def set_title(str)
+      @title = str
+      @title = "新しいメモ" if @title == ""
+    end
+
     def set_one_memo(file_path)
       fi = Json::Io.new(file_path)
       fi.read
@@ -108,7 +111,8 @@ class MemoApp < Sinatra::Base
       end
     end
 
-    def update_data(file_path, in_data)
+    def update_data(file_path)
+      in_data = { title: @title, contents: @contents }
       fi = Json::Io.new(file_path)
       fi.read
       fi.update(in_data)
