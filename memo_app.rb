@@ -36,7 +36,7 @@ class MemoApp < Sinatra::Base
   end
 
   post "/" do
-    @id = new_id(DATAPASH)
+    @id = new_id
 
     @title = params["title"]
     @title = "新しいメモ" if @title == ""
@@ -114,9 +114,8 @@ class MemoApp < Sinatra::Base
       fi.update(in_data)
     end
 
-    def new_id(data_path)
-      filenames = set_only_file_names(data_path)
-      filenames.map(&:to_i).max + 1
+    def new_id
+      SecureRandom.uuid
     end
 end
 
