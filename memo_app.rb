@@ -4,6 +4,7 @@ require "sinatra"
 require "sinatra/reloader"
 require_relative "./lib/file_list"
 require_relative "./lib/json_io"
+require "date"
 
 class MemoApp < Sinatra::Base
   use Rack::MethodOverride
@@ -70,8 +71,15 @@ class MemoApp < Sinatra::Base
     end
 
     def show_top(path)
+      p "MemoApp.show_top" # debug
       files = set_files(path)
+      p "files = " # debug
+      pp files # debug
+
       set_titles(files)
+
+      p "@titles = " # debug
+      pp @titles # debug
       erb :top
     end
 
@@ -105,11 +113,13 @@ class MemoApp < Sinatra::Base
         fi = Json::Io.new(f)
         fi.read
         @titles.push(fi.data)
+        p "fi.data" # debug
       end
     end
 
     def update_data(file_path)
-      in_data = { title: @title, contents: @contents }
+      in_data = { title: @title, contents: @contents, datetime: Time.now.to_i }
+      p in_data # debug
       fi = Json::Io.new(file_path)
       fi.read
       fi.update(in_data)
