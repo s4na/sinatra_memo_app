@@ -11,9 +11,9 @@ module Json
     end
 
     def read
-      set_initiali_data
+      set_read_data
       set_only_filename
-      @data = @initial_data
+      @data = @read_data
     end
 
     def update(input)
@@ -27,17 +27,17 @@ module Json
     end
 
     private
-      def set_initiali_data
+      def set_read_data
         if ::File.exist?(@file_path)
-          @initial_data = open(@file_path, "r") { |io| ::JSON.load(io) }
+          @read_data = open(@file_path, "r") { |io| ::JSON.load(io) }
         end
 
-        @initial_data = {} if @initial_data.nil?
+        @read_data = {} if @read_data.nil?
       end
 
       def set_only_filename
         only_file_name = File.basename(@file_path, ".json")
-        @initial_data["file_name"] = only_file_name
+        @read_data["file_name"] = only_file_name
       end
 
       def save
