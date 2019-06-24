@@ -42,7 +42,6 @@ module Json
 
       def save
         if @data != {}
-          @data.delete("file_name")
           open(@file_path, "w") { |io| ::JSON.dump(@data, io) }
         end
         read
