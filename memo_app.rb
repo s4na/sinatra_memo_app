@@ -71,8 +71,6 @@ class MemoApp < Sinatra::Base
     def show_top(path)
       files = set_files(path)
       set_titles(files)
-      p "@titles" # debug
-      pp @titles
       erb :top
     end
 
