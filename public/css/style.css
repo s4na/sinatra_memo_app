@@ -1,0 +1,14 @@
+header {
+    /* 背景色指定を解除 */
+    background-color: transparent;
+}
+
+.fdb-block {
+    /* 背景色指定を解除 */
+    background-color: transparent;
+}
+
+.form-background {
+    background-image: url(https://cdn.jsdelivr.net/gh/froala/design-blocks@2.0.1/dist/imgs//hero/blue.svg);
+    background-size: cover;
+}

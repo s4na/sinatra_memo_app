@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="col text-left">
+        <form action="/create" method="GET">
+            <dir class="col text-center">
+                <input type="submit" value="追加" class="btn btn-primary">
+            </dir>
+        </form>
+        <div class="card-columns">
+<% @titles.each do |v| %>
+            <div class="card">  
+                <div class="fdb-box fdb-touch">
+<%=
+                    "<h2>#{h(v["title"])}</h2>"
+%><%=
+                    "<a href=\"/#{v["file_name"]}\">もっと見る</a>"
+%>
+                </div>
+            </div>
+<% end %>
+        </div>
+    </div>
+</div>
