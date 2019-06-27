@@ -1,4 +1,4 @@
-# sinatra_memo_app
+# 自作メモアプリ
 
 ## Setup
 
@@ -9,3 +9,7 @@ $ bundle exec ruby memo_app.rb
 # ブラウザで開く
 $  open /Applications/Google\ Chrome.app http://localhost:4567/
 ```
+
+## 概要
+
+メモアプリ
